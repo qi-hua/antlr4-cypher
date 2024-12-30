@@ -11,7 +11,10 @@ permissions:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-
+    environment: pypi
+    permissions:
+      # IMPORTANT: this permission is mandatory for Trusted Publishing
+      id-token: write
     steps:
       - uses: actions/checkout@v4
 
@@ -32,6 +35,3 @@ jobs:
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           packages-dir: dist/
-
-    environment:
-      name: pypi
