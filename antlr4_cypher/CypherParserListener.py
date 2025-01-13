@@ -566,6 +566,15 @@ class CypherParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by CypherParser#rangeLit.
+    def enterRangeLit(self, ctx:CypherParser.RangeLitContext):
+        pass
+
+    # Exit a parse tree produced by CypherParser#rangeLit.
+    def exitRangeLit(self, ctx:CypherParser.RangeLitContext):
+        pass
+
+
     # Enter a parse tree produced by CypherParser#relationshipTypes.
     def enterRelationshipTypes(self, ctx:CypherParser.RelationshipTypesContext):
         pass
@@ -707,15 +716,6 @@ class CypherParserListener(ParseTreeListener):
 
     # Exit a parse tree produced by CypherParser#literal.
     def exitLiteral(self, ctx:CypherParser.LiteralContext):
-        pass
-
-
-    # Enter a parse tree produced by CypherParser#rangeLit.
-    def enterRangeLit(self, ctx:CypherParser.RangeLitContext):
-        pass
-
-    # Exit a parse tree produced by CypherParser#rangeLit.
-    def exitRangeLit(self, ctx:CypherParser.RangeLitContext):
         pass
 
 

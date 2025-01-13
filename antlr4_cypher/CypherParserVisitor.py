@@ -319,6 +319,11 @@ class CypherParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by CypherParser#rangeLit.
+    def visitRangeLit(self, ctx:CypherParser.RangeLitContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by CypherParser#relationshipTypes.
     def visitRelationshipTypes(self, ctx:CypherParser.RelationshipTypesContext):
         return self.visitChildren(ctx)
@@ -396,11 +401,6 @@ class CypherParserVisitor(ParseTreeVisitor):
 
     # Visit a parse tree produced by CypherParser#literal.
     def visitLiteral(self, ctx:CypherParser.LiteralContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CypherParser#rangeLit.
-    def visitRangeLit(self, ctx:CypherParser.RangeLitContext):
         return self.visitChildren(ctx)
 
 

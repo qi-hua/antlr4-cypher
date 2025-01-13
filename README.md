@@ -1,6 +1,6 @@
 # antlr4-cypher
 
-`antlr4-cypher` is a Python package that provides the Lexer and Parser for the Cypher query language, generated using [ANTLR](https://github.com/antlr/antlr4) with the command `java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -listener -visitor CypherParser.g4`. The project includes the necessary grammar, lexer, and parser files, as well as empty listener and visitor classes that serve as a reference for implementing custom logic.
+`antlr4-cypher` is a Python package that provides the Lexer and Parser for the Cypher query language, generated using [ANTLR](https://github.com/antlr/antlr4) with the command `java -jar antlr-4.13.2-complete.jar -Dlanguage=Python3 -listener -visitor -o ./antlr4_cypher CypherLexer.g4 CypherParser.g4`. The project includes the necessary grammar, lexer, and parser files, as well as empty listener and visitor classes that serve as a reference for implementing custom logic.
 
 ## Installation
 
@@ -32,7 +32,7 @@ token_stream = CommonTokenStream(lexer)
 parser = CypherParser(token_stream)
 
 # Parse the input
-tree = parser.cypher()
+tree = parser.script()
 
 # Use the tree for further processing
 ```
@@ -42,9 +42,9 @@ tree = parser.cypher()
 The package includes empty listener and visitor classes that you can extend to implement custom logic for traversing the parse tree. For example:
 
 ```python
-from antlr4_cypher import CypherListener
+from antlr4_cypher import CypherParserListener
 
-class MyCypherListener(CypherListener):
+class MyCypherListener(CypherParserListener):
     def enterMatchSt(self, ctx):
         print("Entering MATCH clause")
 
