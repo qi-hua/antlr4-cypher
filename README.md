@@ -50,8 +50,24 @@ class MyCypherListener(CypherParserListener):
 
     def exitMatchSt(self, ctx):
         print("Exiting MATCH clause")
-```
 
+
+from antlr4_cypher import CypherParserVisitor
+
+class CustomCypherParserVisitor(CypherParserVisitor):
+    def __init__(self, mapping: dict):
+        super().__init__()
+        self.mapping = mapping
+
+    def visit(self, tree):
+        print("Visiting node:", tree.getText())
+        return tree.accept(self)
+
+    # Example of overriding a specific visit method
+    def visitMatchSt(self, ctx):
+        print("Processing MATCH clause with mapping:", self.mapping)
+        return self.visitChildren(ctx)
+```
 
 ---
 
