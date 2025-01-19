@@ -1,0 +1,16 @@
+{
+  "父亲": {
+    "event_type": ["search"],
+    "rules": [
+      {"attribute": "relationship_type", "needed": true, "operator": "==", "value": "父亲"}
+    ],
+    "target":{
+      "type": "父子",
+      "direction": "reverse",
+      "attributes": {
+        "type": "default",
+        "values": {"relationship_type": "父子"}
+      }
+    }
+  }
+}
