@@ -4,7 +4,7 @@ import asyncio
 from concurrent.futures import ProcessPoolExecutor
 
 from aiocache import cached, Cache
-from aiocache.serializers import PickleSerializer
+from aiocache.serializers import NullSerializer
 
 from antlr4.InputStream import InputStream
 from antlr4.CommonTokenStream import CommonTokenStream
@@ -18,7 +18,7 @@ executor = ProcessPoolExecutor(max_workers=10)
 def key_from_args(func, *args, **kwargs):
     ordered_kwargs = sorted(kwargs.items())
     args_str = hashlib.md5(f'{args[1:]}{ordered_kwargs}'.encode("utf-8")).hexdigest()[:16]
-    return f"{func.__module__ or ''}:{func.__name__}:{args_str}"
+    return f"{func.__module__ + ':' or ''}{func.__name__}:{args_str}"
 
 
 class CypherMapper:
@@ -36,7 +36,7 @@ class CypherMapper:
     @cached(
         ttl=10,
         cache=Cache.REDIS, key_builder=key_from_args,
-        serializer = PickleSerializer(),
+        serializer = NullSerializer(),
         port = 6379,
         namespace = "main")
     async def map_query(self, cypher_query: str) -> str:
