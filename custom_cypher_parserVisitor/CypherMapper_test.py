@@ -41,7 +41,7 @@ class TestCypherMapper(unittest.TestCase):
         asyncio.run(run_concurrent_tests())
 
     def test_concurrent_queries2(self):
-        asyncio.run(self._test_concurrent_query(self.queries[0],5000))
+        asyncio.run(self._test_concurrent_query(self.queries[0],10000))
 
 if __name__ == '__main__':
     unittest.main()

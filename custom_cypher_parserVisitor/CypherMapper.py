@@ -1,8 +1,10 @@
 import hashlib
 import json
+import pickle
 import asyncio
 from concurrent.futures import ProcessPoolExecutor
 
+import xxhash
 from aiocache import cached, Cache
 from aiocache.serializers import NullSerializer
 
@@ -16,9 +18,13 @@ executor = ProcessPoolExecutor(max_workers=10)
 
 
 def key_from_args(func, *args, **kwargs):
-    ordered_kwargs = sorted(kwargs.items())
-    args_str = hashlib.md5(f'{args[1:]}{ordered_kwargs}'.encode("utf-8")).hexdigest()[:16]
-    return f"{func.__module__ + ':' or ''}{func.__name__}:{args_str}"
+    # 使用 pickle 序列化 args 和 kwargs
+    args_data = pickle.dumps((args[1:], sorted(kwargs.items())))
+    # 使用 xxhash 计算哈希值
+    args_str = xxhash.xxh32(args_data).hexdigest()[:16]
+    # 生成最终的键
+    module_prefix = f"{func.__module__}:" if func.__module__ else ""
+    return f"{module_prefix}{func.__name__}:{args_str}"
 
 
 class CypherMapper:
@@ -34,7 +40,7 @@ class CypherMapper:
             return json.load(f)
 
     @cached(
-        ttl=10,
+        ttl=300,
         cache=Cache.REDIS, key_builder=key_from_args,
         serializer = NullSerializer(),
         port = 6379,
